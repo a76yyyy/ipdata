@@ -58,7 +58,7 @@ jobs:
       run: |
         Set-TimeZone -Name "China Standard Time"
         echo "Auto Update $(Get-Date -Format 'yyyy-M-d H:m:s')"
-        python ./IP_Sync/ip_Sync.py
+        pipenv run python ./IP_Sync/ip_Sync.py
         
     - name: commit
       run: |
