@@ -32,12 +32,11 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
       
+    - name: Initialize mysql
+      uses: ankane/setup-mysql@v1
+      
     - name: Change Mysql Password
-      run: |
-        echo $(mysqld --initialize-insecure --user=mysql)
-        echo $(mysqld -install)
-        echo $(net start mysql)
-        echo $(mysql -uroot -p -e "set password for root@localhost = password('123456');")
+      run: echo $(mysql -e "set password for root@localhost = password('123456');")
       
     - name: Create DB
       run: echo $(mysql -uroot -p123456 -e "CREATE DATABASE ipdata;")
