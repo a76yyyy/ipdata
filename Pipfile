@@ -1,0 +1,20 @@
+[[source]]
+url = "https://mirrors.aliyun.com/pypi/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+myutils = "*"
+func-timeout = "*"
+fuzzywuzzy = "*"
+requests = "*"
+cryptography = "*"
+PyMySQL = "*"
+python-Levenshtein = "*"
+py7zr = "*"
+
+[dev-packages]
+pylint = "*"
+
+[requires]
+python_version = "3.8"
