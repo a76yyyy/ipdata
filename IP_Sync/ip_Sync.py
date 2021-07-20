@@ -6,7 +6,8 @@
 @version       :2.0
 '''
 
-import sys,os
+import sys,os,io
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 sys.path.append(os.path.abspath(os.path.dirname(os.path.dirname(__file__))))
 import ipUpdate,ipv6Update
@@ -19,8 +20,7 @@ from collegeUpdate import collegeUpdate
 from convert import convert
 from file_set import file_set
 from __init__ import data_dir,tmp_dir,DEFAULT_FILE_LOCATION
-import io
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+
 
 file_set(tmp_dir,'dir')
 file_set(data_dir,'dir')

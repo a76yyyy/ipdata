@@ -20,8 +20,6 @@ from ipSearch import IPLoader,IPv6Loader
 from ipUpdate import dat_down_info
 from ipv6Update import db_down_info
 from dat2txt import get_ip_info
-import io
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 def usage():
     print(

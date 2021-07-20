@@ -23,8 +23,6 @@ from ipSearch import IPv6Loader
 from ipUpdate import get_fetcher
 from file_set import file_set
 from typing import Union, Optional
-import io
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 try:
     from configs import default_txt_update
 except :

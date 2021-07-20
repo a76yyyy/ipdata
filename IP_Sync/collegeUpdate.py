@@ -18,8 +18,6 @@ import getopt
 import time
 from file_set import file_set
 from __init__ import tmp_dir
-import io
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 logger = logging.getLogger(__name__)
 

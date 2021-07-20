@@ -15,8 +15,6 @@ from ipSearch import IPLoader,convert_int_ip_to_string,convert_string_ip_to_int
 from ipSearch import IPv6Loader
 from __init__ import tmp_dir,data_dir
 from __init__ import DEFAULT_FILE_LOCATION as ipv6_dbfile
-import io
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 def usage():
     print(
