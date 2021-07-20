@@ -24,6 +24,7 @@ jobs:
       fail-fast: false
       matrix:
         language: [ 'python' ]
+        mysql-version: [8.0]
         # CodeQL supports [ 'cpp', 'csharp', 'go', 'java', 'javascript', 'python' ]
         # Learn more:
         # https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/configuring-code-scanning#changing-the-languages-that-are-analyzed
@@ -34,9 +35,11 @@ jobs:
       
     - name: Initialize mysql
       uses: ankane/setup-mysql@v1
+      with:
+        mysql-version: ${{ matrix.mysql-version }}
       
     - name: Change Mysql Password
-      run: echo $(mysql -e "set password for root@localhost = password('123456');")
+      run: echo $(mysql -e "alter user 'root'@'localhost' identified by '123456';")
       
     - name: Create DB
       run: echo $(mysql -uroot -p123456 -e "CREATE DATABASE ipdata;")
