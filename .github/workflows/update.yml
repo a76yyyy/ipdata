@@ -1,0 +1,83 @@
+# For most projects, this workflow file will not need changing; you simply need
+# to commit it to your repository.
+#
+# You may wish to alter this file to override the set of updated,
+# or to provide custom queries or build logic.
+#
+#
+name: "Update"
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: [ main ]
+  schedule:
+    - cron: '0 17 1,5,10,15,20,25,30 * *'
+
+jobs:
+  Update:
+    name: Update
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        mysql-version: [8.0]
+        python-version: [3.x]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Initialize mysql
+      uses: ankane/setup-mysql@v1
+      with:
+        mysql-version: ${{ matrix.mysql-version }}
+
+    - name: Change Mysql Password
+      run: echo $(mysql -e "alter user 'root'@'localhost' identified by '123456';")
+
+    - name: Create DB
+      run: echo $(mysql -uroot -p123456 -e "CREATE DATABASE ipdata;")
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install pipenv
+      uses: dschep/install-pipenv-action@v1
+
+    - name: Update ipdata
+      run: |
+        chcp 65001
+        Set-TimeZone -Name "China Standard Time"
+        echo "Auto Update $(Get-Date -Format 'yyyy-M-d H:m:s')"
+        pipenv install --dev
+        pipenv run python ./IP_Sync/ip_Sync.py
+        
+    - name: commit
+      run: |
+        git config --global user.email ${{ secrets.USER_EMAIL }}
+        git config --global user.name ${{ secrets.USER_NAME }}
+        git add .
+        git commit -m "Auto Update $(Get-Date -Format 'yyyy-M-d H:m:s')"
+        git pull origin main
+        
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+
+  mirror_to_gitee:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    
+    - name: 'Mirror to gitee'
+      uses: pixta-dev/repository-mirroring-action@v1
+      with:
+        target_repo_url: git@gitee.com:a76yyyy/ipdata.git
+        ssh_private_key: ${{ secrets.GITEE_KEY }}
