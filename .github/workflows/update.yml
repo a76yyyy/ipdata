@@ -34,13 +34,13 @@ jobs:
       
     - name: Change Mysql Password
       run: |
-        mysqld --initialize-insecure --user=mysql
-        mysqld -install
-        net start mysql
-        mysql -uroot -p -e "set password for root@localhost = password('123456');"
+        echo $(mysqld --initialize-insecure --user=mysql)
+        echo $(mysqld -install)
+        echo $(net start mysql)
+        echo $(mysql -uroot -p -e "set password for root@localhost = password('123456');")
       
     - name: Create DB
-      run: mysql -uroot -p123456 -e "CREATE DATABASE ipdata;"  
+      run: echo $(mysql -uroot -p123456 -e "CREATE DATABASE ipdata;")
       
     # Initializes the CodeQL tools.
     - name: Initialize CodeQL
