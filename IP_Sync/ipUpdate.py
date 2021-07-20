@@ -34,6 +34,8 @@ import requests
 import time
 import __init__
 from file_set import file_set
+import io
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 try:
     from configs import default_txt_update
 except :
@@ -136,9 +138,9 @@ def dat_down(filename,version_file):
         content = handle.read()
         if len(content) > 0:
             curr_version, check_time, update_time = struct.unpack("<3I", content)
-            print('本地IPv4数据文件版本: ', curr_version)
-            print('上次检查更新时间: ', time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(check_time)))
-            print('上次数据更新时间: ', time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(update_time)))
+            print('本地IPv4数据文件版本: ' + str(curr_version))
+            print('上次检查更新时间: ' + str(time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(check_time))))
+            print('上次数据更新时间: ' + str(time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(update_time))))
             print('')
 
     print('开始检查IPv4数据库更新: \n---------------处理中, 请稍候---------------')
