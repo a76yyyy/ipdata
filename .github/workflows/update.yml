@@ -34,8 +34,10 @@ jobs:
       
     - name: Change Mysql Password
       run: |
+        mysqld --initialize-insecure --user=mysql
+        mysqld -install
         net start mysql
-        mysql -uroot -proot -e "set password for root@localhost = password('123456');"
+        mysql -uroot -p -e "set password for root@localhost = password('123456');"
       
     - name: Create DB
       run: mysql -uroot -p123456 -e "CREATE DATABASE ipdata;"  
@@ -52,9 +54,8 @@ jobs:
     
     - name: Update ipdata
       run: |
-        tzutil /s "China Standard Time"
-        SET dd=%DATE:~0,10%
-        SET tt=%time:~0,8%
+        Set-TimeZone -Name "China Standard Time"
+        echo "Auto Update $(Get-Date -Format 'yyyy-M-d H:m:s')"
         python ./IP_Sync/ip_Sync.py
         
     - name: commit
@@ -62,7 +63,7 @@ jobs:
         git config --global user.email ${{ secrets.USER_EMAIL }}
         git config --global user.name ${{ secrets.USER_NAME }}
         git add .
-        git commit -m "Auto Update %dd:/=-% %tt%"
+        git commit -m "Auto Update $(Get-Date -Format 'yyyy-M-d H:m:s')"
         
     - name: Push changes
       uses: ad-m/github-push-action@master
