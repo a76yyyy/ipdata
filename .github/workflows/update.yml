@@ -1,0 +1,68 @@
+# For most projects, this workflow file will not need changing; you simply need
+# to commit it to your repository.
+#
+# You may wish to alter this file to override the set of updated,
+# or to provide custom queries or build logic.
+#
+#
+name: "Update"
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: [ main ]
+  schedule:
+    - cron: '0 17 1,5,10,15,20,25,30 * *'
+
+jobs:
+  Update:
+    name: Update
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'python' ]
+        # CodeQL supports [ 'cpp', 'csharp', 'go', 'java', 'javascript', 'python' ]
+        # Learn more:
+        # https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/configuring-code-scanning#changing-the-languages-that-are-analyzed
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      
+    - name: Change Mysql Password
+      run: mysql -uroot -proot -e "set password for root@localhost = password('123456');"
+      
+    - name: Create DB
+      run: mysql -uroot -p123456 -e "CREATE DATABASE ipdata;"  
+      
+    # Initializes the CodeQL tools.
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v1
+      with:
+        languages: ${{ matrix.language }}
+        # If you wish to specify custom queries, you can do so here or in a config file.
+        # By default, queries listed here will override any specified in a config file.
+        # Prefix the list here with "+" to use these queries and those in the config file.
+        # queries: ./path/to/local/query, your-org/your-repo/queries@main
+    
+    - name: Update ipdata
+      run: |
+        tzutil /s "China Standard Time"
+        SET dd=%DATE:~0,10%
+        SET tt=%time:~0,8%
+        python ./IP_Sync/ip_Sync.py
+        
+    - name: commit
+      run: |
+        git config --global user.email ${{ secrets.USER_EMAIL }}
+        git config --global user.name ${{ secrets.USER_NAME }}
+        git add .
+        git commit -m "定时同步 %dd:/=-% %tt%"
+		
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
