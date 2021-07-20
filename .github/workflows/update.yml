@@ -23,11 +23,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [ 'python' ]
         mysql-version: [8.0]
-        # CodeQL supports [ 'cpp', 'csharp', 'go', 'java', 'javascript', 'python' ]
-        # Learn more:
-        # https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/configuring-code-scanning#changing-the-languages-that-are-analyzed
+        python-version: [3.9]
 
     steps:
     - name: Checkout repository
@@ -44,10 +41,10 @@ jobs:
     - name: Create DB
       run: echo $(mysql -uroot -p123456 -e "CREATE DATABASE ipdata;")
       
-    - name: Set up Python 3.9
-      uses: actions/setup-python@v1
+    - name: Set up Python
+      uses: actions/setup-python@v2
       with:
-        python-version: 3.9
+        python-version: ${{ matrix.python-version }}
     
     - name: Install pipenv
       uses: dschep/install-pipenv-action@v1
