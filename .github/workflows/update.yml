@@ -51,6 +51,7 @@ jobs:
     
     - name: Update ipdata
       run: |
+        chcp 65001
         Set-TimeZone -Name "China Standard Time"
         echo "Auto Update $(Get-Date -Format 'yyyy-M-d H:m:s')"
         pipenv install --dev
