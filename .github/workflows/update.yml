@@ -33,7 +33,9 @@ jobs:
       uses: actions/checkout@v2
       
     - name: Change Mysql Password
-      run: mysql -uroot -proot -e "set password for root@localhost = password('123456');"
+      run: |
+        net start mysql
+        mysql -uroot -proot -e "set password for root@localhost = password('123456');"
       
     - name: Create DB
       run: mysql -uroot -p123456 -e "CREATE DATABASE ipdata;"  
