@@ -14,6 +14,8 @@ from struct import pack, unpack
 import collections
 from typing import Tuple, List
 import __init__
+import sys,io
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 DEFAULT_FILE_LOCATION = __init__.DEFAULT_FILE_LOCATION
 '''

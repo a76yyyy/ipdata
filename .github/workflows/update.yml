@@ -63,6 +63,7 @@ jobs:
         git config --global user.name ${{ secrets.USER_NAME }}
         git add .
         git commit -m "Auto Update $(Get-Date -Format 'yyyy-M-d H:m:s')"
+        git pull origin main
         
     - name: Push changes
       uses: ad-m/github-push-action@master

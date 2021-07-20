@@ -19,6 +19,8 @@ import json
 from file_set import file_set
 import getopt
 from __init__ import tmp_dir,data_dir
+import io
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 def usage():
     print(
