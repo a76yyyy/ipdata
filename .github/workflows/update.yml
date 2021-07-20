@@ -60,8 +60,8 @@ jobs:
         git config --global user.email ${{ secrets.USER_EMAIL }}
         git config --global user.name ${{ secrets.USER_NAME }}
         git add .
-        git commit -m "定时同步 %dd:/=-% %tt%"
-		
+        git commit -m "Auto Update %dd:/=-% %tt%"
+        
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
