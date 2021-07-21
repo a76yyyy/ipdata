@@ -12,9 +12,11 @@
 [![](https://img.shields.io/github/commit-activity/m/a76yyyy/czipdata)](https://github.com/a76yyyy/czipdata/)
 ![](https://img.shields.io/github/repo-size/a76yyyy/czipdata)
 ![](https://img.shields.io/github/pipenv/locked/python-version/a76yyyy/czipdata)
+[![Update](https://github.com/a76yyyy/ipdata/actions/workflows/update.yml/badge.svg)](https://github.com/a76yyyy/ipdata/actions/workflows/update.yml)
+[![Create Release](https://github.com/a76yyyy/ipdata/actions/workflows/create-release.yml/badge.svg)](https://github.com/a76yyyy/ipdata/actions/workflows/create-release.yml)
 
 纯真IPv4数据库镜像 / ZXinc_IPv6数据库镜像及MySQL脚本同步更新 for Python3(原czipdata项目)
-(为减少仓库占用, 所有数据文件均通过release发布)
+(数据文件通过release发布)
 
 Github：[https://github.com/a76yyyy/ipdata](https://github.com/a76yyyy/ipdata)(推荐)
 

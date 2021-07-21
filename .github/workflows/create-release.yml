@@ -1,9 +1,6 @@
 name: Create Release
 
-on:
-  push:
-    tags:
-      - 'v*.*.*'
+on: push
 
 jobs:
   build:
@@ -20,11 +17,12 @@ jobs:
       
       - name: Release
         uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          body_path: Release.txt
           files: |
+            Release.txt
             data/*.sql.gz
             data/*.dat
             data/*.db

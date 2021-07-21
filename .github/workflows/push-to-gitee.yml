@@ -1,9 +1,7 @@
 name: "push_to_gitee"
 
 on:
-  push:
-    tags:
-      - 'v*.*.*'
+  push: tags
   pull_request:
     # The branches below must be a subset of the branches above
     branches: [ main ]
