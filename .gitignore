@@ -1,9 +1,6 @@
 # data-raw
 Release.txt
-data/*.gz
-data/*.dat
-data/*.db
-data/*.txt
+data/*.sql
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
