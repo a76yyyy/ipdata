@@ -23,7 +23,7 @@ SET Log=log\Auto_Update_%ymd%.log
 (ECHO =======================================================
 ECHO          Starting automatic update ipdata
 ECHO =======================================================
-
+git pull origin main
 python ./IP_Sync/ip_Sync.py
 ECHO =======================================================
 ECHO          Starting automatic git commit push
@@ -33,7 +33,8 @@ REM start git script
 ECHO %~dp0
 git add .
 git status -s
-git commit -m "定时同步 %dd:/=-% %tt%"
-git push origin main
-git push Gitee main
+git commit -m "Auto Update %dd:/=-% %tt%"
+git tag "v%dd:/=.%" -m "Auto Update %dd:/=-% %tt%"
+git push origin main --tags
+git push Gitee main --tags
 )>"%Log%"
