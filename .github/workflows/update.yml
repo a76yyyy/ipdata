@@ -71,20 +71,3 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         tags: true
-      
-    - name: Build
-      run: echo ${{ github.sha }} > Release.txt
-    - name: Test
-      run: cat Release.txt
-    - name: Release
-      uses: softprops/action-gh-release@v1
-      with:
-        files: |
-          Release.txt
-          data/*.gz
-          data/*.dat
-          data/*.db
-          data/*.txt
-        draft: false
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
