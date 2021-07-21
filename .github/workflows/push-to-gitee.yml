@@ -1,0 +1,21 @@
+name: "push_to_gitee"
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: [ main ]
+
+jobs:
+  mirror_to_gitee:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    
+    - name: 'Mirror to gitee'
+      uses: pixta-dev/repository-mirroring-action@v1
+      with:
+        target_repo_url: git@gitee.com:a76yyyy/ipdata.git
+        ssh_private_key: ${{ secrets.GITEE_KEY }}
