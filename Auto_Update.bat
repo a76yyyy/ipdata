@@ -3,12 +3,13 @@ IF "%1" == "h" GOTO begin
 mshta vbscript:createobject("wscript.shell").run("%~nx0 h",0)(window.close)&&exit
 :begin
 @ECHO OFF 
-TITLE =定时同步更新czipdata By A76YYYY
-REM %DATE:~0,10%  2020/11/24
 SET dd=%DATE:~0,10%
 SET tt=%time:~0,8%
 SET hour=%tt:~0,2%
 SET ymd=%dd:/=-%
+chcp 65001
+TITLE =定时同步更新czipdata By A76YYYY
+REM %DATE:~0,10%  2020/11/24
 REM change file directory
 CD /d %~dp0
 REM 判断log目录是否存在，如果不存在则创建
@@ -20,7 +21,9 @@ MD %logFolder%
 )
 REM create log file
 SET Log=log\Auto_Update_%ymd%.log
-(ECHO =======================================================
+(
+chcp 65001
+ECHO =======================================================
 ECHO          Starting automatic update ipdata
 ECHO =======================================================
 git pull origin main
