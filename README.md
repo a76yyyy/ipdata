@@ -14,6 +14,7 @@
 ![](https://img.shields.io/github/pipenv/locked/python-version/a76yyyy/czipdata)
 
 纯真IPv4数据库镜像 / ZXinc_IPv6数据库镜像及MySQL脚本同步更新 for Python3(原czipdata项目)
+(为减少仓库占用, 所有数据文件均通过release发布)
 
 Github：[https://github.com/a76yyyy/ipdata](https://github.com/a76yyyy/ipdata)(推荐)
 
