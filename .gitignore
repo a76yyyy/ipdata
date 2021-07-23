@@ -1,6 +1,7 @@
 # data-raw
 Release.txt
 data/*.sql
+data/ipdata.db
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

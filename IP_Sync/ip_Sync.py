@@ -12,13 +12,14 @@ sys.path.append(os.path.abspath(os.path.dirname(os.path.dirname(__file__))))
 import ipUpdate,ipv6Update
 from ipSearch import IPLoader,IPv6Loader
 from dat2txt import get_ip_info,get_ipv6_info
-from database import mysql_Database
-from configs import config,default_dat_update,default_txt_update,default_sql_update,default_sql_export,default_gz_export
+from database import mysql_Database, sqlite3_Database
+from configs import config,default_dat_update,default_sqlite3_update,default_txt_update,default_sql_update,default_sql_export,default_gz_export
 from dat2mysql import dat2mysql,db2mysql
+from dat2sqlite3 import dat2sqlite3,db2sqlite3
 from collegeUpdate import collegeUpdate
 from convert import convert
 from file_set import file_set
-from __init__ import data_dir,tmp_dir,DEFAULT_FILE_LOCATION
+from __init__ import data_dir,tmp_dir,DEFAULT_FILE_LOCATION,sql_file,table_college_info_sql_file,table_iprange_info_sql_file,table_ipv6_range_info_sql_file
 sys.stdout.reconfigure(encoding='utf-8')
 
 file_set(tmp_dir,'dir')
@@ -56,8 +57,8 @@ def dat2Txt(dat_filename= None, txt_filename= None, startIndex= None, endIndex= 
 
     if dat_filename == None:
         dat_filename = os.path.abspath(data_dir+os.path.sep+"czipdata.dat")
-        if not file_set(dat_filename) or default_dat_update:
-            tag = down(dat_filename)
+    if not file_set(dat_filename) or default_dat_update:
+        tag = down(dat_filename)
     q = IPLoader(dat_filename)
     if txt_filename == None:
         txt_filename = os.path.abspath(data_dir+os.path.sep+"czipdata.txt")
@@ -101,8 +102,8 @@ def db2Txt(db_filename= None, txt_filename= None, startIndex= None, endIndex= No
 
     if db_filename == None:
         db_filename = DEFAULT_FILE_LOCATION
-        if not file_set(db_filename) or default_dat_update:
-            tag = v6down(db_filename,ipv4update=ipv4update)
+    if not file_set(db_filename) or default_dat_update:
+        tag = v6down(db_filename,ipv4update=ipv4update)
     D = IPv6Loader(db_filename)
     if txt_filename == None:
         txt_filename = os.path.abspath(data_dir+os.path.sep+"ipv6data.txt")
@@ -156,12 +157,54 @@ def db2Mysql(mysql_object,ipv6_tablename= None, db_filename= None,ipv6update= Tr
     if ipv6update:
         db2mysql(mysql,ipv6_tablename,db_filename)
 
-def collegeupdate(collegeJson= None, college_tablename= None):
+def dat2SQLite3(sqlite3_object,ip_tablename= None, txt_filename= None):
+    """
+    @description  :将纯真IP数据库的txt文件转换至sqlite3数据库指定表中
+    ---------
+    @params  :ip_tablename : sqlite3中IP数据库的表名,默认为"iprange_info"
+             txt_filename : 输入文本文件的文件名或路径,默认为"../data/czipdata.txt"
+    -------
+    @Returns  :None
+    -------
+    """
+    
+    if txt_filename == None:
+        txt_filename = os.path.abspath(data_dir+os.path.sep+"czipdata.txt")
+        if not file_set(txt_filename):
+            dat2Txt(txt_filename= txt_filename)
+    if ip_tablename == None:
+        ip_tablename = 'iprange_info'
+    sqlite3 = sqlite3_object
+    dat2sqlite3(sqlite3,ip_tablename,txt_filename)
+
+def db2SQLite3(sqlite3_object,ipv6_tablename= None, db_filename= None,ipv6update= True):
+    """
+    @description  :将ZXinc_IPv6数据库的db文件转换至sqlite3数据库指定表中
+    ---------
+    @params  :ipv6_tablename : sqlite3中IP数据库的表名,默认为"ipv6_range_info"
+             db_filename : 输入文本文件的文件名或路径,默认为"../data/ipv6data.db"
+    -------
+    @Returns  :None
+    -------
+    """
+    
+    if db_filename == None:
+        db_filename = DEFAULT_FILE_LOCATION
+        if not file_set(db_filename):
+            v6down(db_filename)
+    if ipv6_tablename == None:
+        ipv6_tablename = 'ipv6_range_info'
+    sqlite3 = sqlite3_object
+    if ipv6update:
+        db2sqlite3(sqlite3,ipv6_tablename,db_filename)
+
+def collegeupdate(collegeJson= None, college_tablename= None, sqlite3file= None):
     """
     @description  :从'https://github.com/pg7go/The-Location-Data-of-Schools-in-China'导入'大学-8084.json'至指定json格式文件名.
     ---------
     @param  :collegeJson : 输出大学数据的json文件名或路径,默认为"./tmp/college.json".
              college_tablename : mySQL中IP数据库的大学信息表的表名,默认为"college_info"
+             sqlite3file : sqlite3数据库文件名或路径，默认为"../data/ipdata.db".
     -------
     @Returns  :None
     -------
@@ -171,9 +214,9 @@ def collegeupdate(collegeJson= None, college_tablename= None):
         collegeJson =  os.path.abspath(tmp_dir+os.path.sep+"college.json")
     if college_tablename == None:
         college_tablename = 'college_info'
-    collegeUpdate(filename, college_tablename)
+    collegeUpdate(filename, college_tablename, sqlite3file=sqlite3file)
 
-def convertipv4(mysql_object,college_tablename= None,num_config= None,start_id= None,college_filename= None,correct_filename= None):
+def convertipv4(sql_object,college_tablename= None,num_config= None,start_id= None,college_filename= None,correct_filename= None,sqlite3file= None):
     """
     @description :将纯真IP数据库内的地址细分为省市区
     ---------
@@ -182,6 +225,7 @@ def convertipv4(mysql_object,college_tablename= None,num_config= None,start_id= 
              college_tablename : mySQL中IP数据库的大学信息表的表名,默认为"college_info".
              college_filename : 输出大学数据的json文件名或路径,默认为"./tmp/college.json".
              correct_filename : 自定义纠错文件的json文件名或路径,默认为"../data/correct.json".
+             sqlite3file : sqlite3数据库文件名或路径，默认为"../data/ipdata.db".
     -------
     @Returns  :None
     -------
@@ -198,14 +242,10 @@ def convertipv4(mysql_object,college_tablename= None,num_config= None,start_id= 
         correct_filename =  os.path.abspath(data_dir+os.path.sep+"correct.json")
         file_set(correct_filename)
     
-    convert(mysql_object,college_tablename,num_config,start_id,college_filename,correct_filename)
+    convert(sql_object,college_tablename,num_config,start_id,college_filename,correct_filename,sqlite3file=sqlite3file)
 
-def sqldump(mysql_object):
+def sqldump(sql_file,table_college_info_sql_file,table_iprange_info_sql_file,table_ipv6_range_info_sql_file):
     print( "连接IP数据库, 并导出为sql文件: \n---------------处理中, 请稍候---------------")
-    sql_file = os.path.abspath(data_dir+os.path.sep+"ipdatabase.sql")
-    table_college_info_sql_file = os.path.abspath(data_dir+os.path.sep+"college_info.sql")
-    table_iprange_info_sql_file = os.path.abspath(data_dir+os.path.sep+"iprange_info.sql")
-    table_ipv6_range_info_sql_file = os.path.abspath(data_dir+os.path.sep+"ipv6_range_info.sql")
     if default_sql_export:
         os.system('mysqldump --net-buffer-length=%s -h %s -P %s -u %s -p%s %s > %s' % (config['mysql'].net_buffer_length, config['mysql'].host, config['mysql'].port, config['mysql'].user, config['mysql'].password, config['mysql'].ip_database, sql_file))
         print( "IP数据库sql脚本导出成功! ")
@@ -214,7 +254,7 @@ def sqldump(mysql_object):
         os.system('mysqldump --net-buffer-length=%s -h %s -P %s -u %s -p%s %s iprange_info > %s' % (config['mysql'].net_buffer_length, config['mysql'].host, config['mysql'].port, config['mysql'].user, config['mysql'].password, config['mysql'].ip_database, table_iprange_info_sql_file))
         print( "IPv4数据表sql脚本导出成功! ")
         os.system('mysqldump --net-buffer-length=%s -h %s -P %s -u %s -p%s %s ipv6_range_info > %s' % (config['mysql'].net_buffer_length, config['mysql'].host, config['mysql'].port, config['mysql'].user, config['mysql'].password, config['mysql'].ip_database, table_ipv6_range_info_sql_file))
-        print( "IPv6数据表sql脚本导出成功! ")
+        print( "IPv6数据表sql脚本导出成功! \n")
     if default_gz_export:
         os.system('mysqldump --net-buffer-length=%s -h %s -P %s -u %s -p%s %s | gzip > %s' % (config['mysql'].net_buffer_length, config['mysql'].host, config['mysql'].port, config['mysql'].user, config['mysql'].password, config['mysql'].ip_database, sql_file+'.gz'))
         print( "IP数据库gz压缩档导出成功! ")
@@ -223,8 +263,13 @@ def sqldump(mysql_object):
         os.system('mysqldump --net-buffer-length=%s -h %s -P %s -u %s -p%s %s iprange_info | gzip > %s' % (config['mysql'].net_buffer_length, config['mysql'].host, config['mysql'].port, config['mysql'].user, config['mysql'].password, config['mysql'].ip_database, table_iprange_info_sql_file+'.gz'))
         print( "IPv4数据表gz压缩档导出成功! ")
         os.system('mysqldump --net-buffer-length=%s -h %s -P %s -u %s -p%s %s ipv6_range_info | gzip > %s' % (config['mysql'].net_buffer_length, config['mysql'].host, config['mysql'].port, config['mysql'].user, config['mysql'].password, config['mysql'].ip_database, table_ipv6_range_info_sql_file+'.gz'))
-        print( "IPv6数据表gz压缩档导出成功! ")
+        print( "IPv6数据表gz压缩档导出成功! \n")
         
+def sqlite3dump(sqlite3file):
+    print( "将SQLite3数据库压缩为gz文件: \n---------------处理中, 请稍候---------------")
+    if default_gz_export:
+        os.system('gzip %s' % ( sqlite3file))
+        print( "SQLite3数据库gz压缩档导出成功! \n")
     
 if __name__ == '__main__':
     """
@@ -235,23 +280,39 @@ if __name__ == '__main__':
     @Returns  :None
     -------
     """
-    filename =  os.path.abspath(data_dir+os.path.sep+"czipdata.dat")
     ipv4update,ipv6update = None,None
-    if os.path.exists(filename):
-        txt_filename = os.path.abspath(data_dir+os.path.sep+"czipdata.txt")
-        if os.path.exists(txt_filename):
-            ipv4update = dat2Txt(txt_filename= txt_filename)
+
+    filename =  os.path.abspath(data_dir+os.path.sep+"czipdata.dat")
+    txt_filename = os.path.abspath(data_dir+os.path.sep+"czipdata.txt")
+    ipv4update = dat2Txt(dat_filename=filename, txt_filename= txt_filename)
+
     v6filename =  DEFAULT_FILE_LOCATION
-    if os.path.exists(v6filename):
-        v6txt_filename = os.path.abspath(data_dir+os.path.sep+"ipv6data.txt")
-        if os.path.exists(v6txt_filename):
-            if ipv4update:
-                ipv6update = db2Txt(txt_filename= v6txt_filename, ipv4update=True)
-            else:
-                ipv6update = db2Txt(txt_filename= v6txt_filename)
+    v6txt_filename = os.path.abspath(data_dir+os.path.sep+"ipv6data.txt")
+    if ipv4update:
+        ipv6update = db2Txt(db_filename=v6filename, txt_filename= v6txt_filename, ipv4update=True)
+    else:
+        ipv6update = db2Txt(db_filename=v6filename, txt_filename= v6txt_filename)
+
     if default_sql_update:
+        print( "===============MySQL数据库更新=============== \n")
         mysql = mysql_Database(config['mysql'].ip_database)
-        dat2Mysql(mysql)
-        convertipv4(mysql)
-        db2Mysql(mysql,ipv6update=ipv6update)
-        sqldump(mysql)
+        if ipv4update:
+            dat2Mysql(mysql)
+            convertipv4(mysql)
+        if ipv6update:
+            db2Mysql(mysql,ipv6update=ipv6update)
+        if ipv4update or ipv6update:
+            sqldump(sql_file,table_college_info_sql_file,table_iprange_info_sql_file,table_ipv6_range_info_sql_file)
+
+    if default_sqlite3_update:
+        print( "===============SQLite3数据库更新=============== \n")
+        sqlite3file = config['sqlite3'].ip_database
+        sqlite3 = sqlite3_Database(sqlite3file)
+        if ipv4update:
+            dat2SQLite3(sqlite3)
+            convertipv4(sqlite3,sqlite3file=sqlite3file)
+        if ipv6update:
+            db2SQLite3(sqlite3)
+        sqlite3.__del__
+        if ipv4update or ipv6update:
+            sqlite3dump(sqlite3file)

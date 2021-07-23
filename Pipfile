@@ -12,6 +12,7 @@ cryptography = "*"
 PyMySQL = "*"
 python-Levenshtein = "*"
 py7zr = "*"
+ipaddress = "*"
 
 [dev-packages]
 pylint = "*"
