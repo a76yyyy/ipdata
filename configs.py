@@ -7,7 +7,7 @@
 '''
 
 import os
-sqltype = 'mysql' 
+
 default_dat_update = True #执行ip_Sync.py时是否默认联网自动更新czipdata.dat文件, False为默认不更新, 不存在dat文件时该选项失效。
 default_sqlite3_update = True #当执行ip_Sync.py时是否默认自动更新SQLite3数据库, False为默认不更新。
 default_txt_update = False #当数据文件版本无更新时是否默认自动更新czipdata.txt文件, False为默认不更新。

@@ -54,6 +54,54 @@ czipdata.txt|纯真IPv4数据文本文件|TXT
 ipv6data.txt|ZXinc_IPv6数据文本文件|TXT
 correct.json|地址细分纠错文件|JSON
 
+# IP查询
+## 安装相关模块
+```powershell
+# 使用git前请先安装git软件
+git clone --depth=1 https://github.com/a76yyyy/ipdata.git
+cd ipdata
+# 安装gzip 解压data文件夹中的gz相关文件;
+# 使用sqlite3请先安装sqlite3软件, 数据库文件在data/ipdata.db.gz压缩档内;
+# 使用mysql请先安装mysql组件并导入sql脚本, sql脚本在data/ipdatabase.sql.gz压缩档内;
+# 进行下述操作前请先安装python3;
+pip3 install pipenv
+pipenv install
+pipenv shell
+python
+```
+## SQLite3 for Python3
+```python
+from database import sqlite3_Database
+from configs import config
+sqlite3file = config['sqlite3'].ip_database
+conn = sqlite3_Database(sqlite3file)
+```
+## MySQL for Python3
+```python
+from database import mysql_Database
+from configs import config
+conn = mysql_Database(config['mysql'].ip_database)
+```
+## IPv4 查询
+```python
+import ipaddress
+ip = ipaddress.IPv4Address('114.114.114.114')
+sql = "select * from iprange_info where " + str(int(ip)) +" between ip_start_num and ip_end_num " 
+print(conn.query(sql))
+```
+## IPv6 查询
+```python
+import ipaddress
+ip = ipaddress.IPv6Address('2400:3200::')
+sql = "select * from ipv6_range_info where x'" + ''.join(ip.exploded.split(':')) +"' between ip_start_num and ip_end_num " 
+print(conn.query(sql))
+```
+## 退出
+```python
+conn.__del__()
+exit()
+```
+
 # TODO
 
 1. 实现data文件夹的分类存储;
