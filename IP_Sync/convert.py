@@ -63,11 +63,14 @@ def convert_ip(sql_object, college_tablename, num_config, start_id, correct_list
 
     if result_num == num_config:
         print( "本批次（行：" + str(start_id-1) + " - " + str( next_id - 2 ) + "）已处理完成。共需处理" + str(result_num) + "条，成功转换" + str(i) + "条。\n系统将自动处理下一批IP数据（行：" + str(next_id-1) + " - " + str(next_end_id-1) + "）…… \n---------------处理中, 请稍候---------------" )
-        sql_object.__del__()
-        if sqlite3file:
-            sql_object = sqlite3_Database(sqlite3file)
-        else:
-            sql_object = mysql_Database(config['mysql'].ip_database)
+        # try:
+        #     sql_object.__del__()
+        # finally:
+        #     pass
+        # if sqlite3file:
+        #     sql_object = sqlite3_Database(sqlite3file)
+        # else:
+        #     sql_object = mysql_Database(config['mysql'].ip_database)
         convert_ip(sql_object, college_tablename, num_config, next_id, correct_list, correct_json,sqlite3file=sqlite3file)
     else:
         print( "本批次（行：" + str(start_id-1) + " - " + str( start_id + result_num -2 ) + "）已处理完成。共需处理" + str(result_num) + "条，成功转换" + str(i) + "条。" )
