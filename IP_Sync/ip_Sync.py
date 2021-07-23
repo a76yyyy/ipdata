@@ -268,7 +268,7 @@ def sqldump(sql_file,table_college_info_sql_file,table_iprange_info_sql_file,tab
 def sqlite3dump(sqlite3file):
     print( "将SQLite3数据库压缩为gz文件: \n---------------处理中, 请稍候---------------")
     if default_gz_export:
-        os.system('gzip -y %s' % ( sqlite3file))
+        os.system('gzip -fq %s' % ( sqlite3file))
         print( "SQLite3数据库gz压缩档导出成功! \n")
     
 if __name__ == '__main__':
