@@ -23,6 +23,7 @@ jobs:
         with:
           files: |
             Release.txt
+            data/*.db.gz
             data/*.sql.gz
             data/*.dat
             data/*.db
