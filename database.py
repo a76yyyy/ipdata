@@ -86,10 +86,8 @@ class mysql_Database(object):
 
 class sqlite3_Database(object):
     
-    def __init__(self,db_file):
-        if os.path.isfile(db_file):
-            os.remove(db_file)
-        #self.connection
+    def __init__(self,db_file,connect_timeout=5.0):
+        self.connection = sqlite3.connect(db_file,timeout=connect_timeout)
         self.cursor = self.connection.cursor()
 
     def insert(self, query, params):
@@ -106,10 +104,43 @@ class sqlite3_Database(object):
         except Exception as e:
             print(e)
             self.connection.rollback()
-    def query(self, query):
-        cursor = self.connection.cursor(pymysql.cursors.DictCursor)
-        cursor.execute(query)
-        return cursor.fetchall()
+    def executemany(self,code,slist):
+        try:
+            self.cursor.executemany(code,slist)
+            self.connection.commit()
+        except Exception as e:
+            print(e)
+            self.connection.rollback()
+    def dictFactory(self,cursor,row):
+        """将sql查询结果整理成字典形式"""
+        d={}
+        for index,col in enumerate(cursor.description):
+            d[col[0]]=row[index]
+        return d
+    def query(self, query, *args):
+        self.connection.row_factory=self.dictFactory # 得到一个可以执行SQL语句并且将结果作为字典返回的游标
+        self.cursor = self.connection.cursor()
+        result = None
+        timeout = None
+        if args:
+            if len(args) == 1:
+                timeout = args[0]
+        if timeout:
+            @func_set_timeout(timeout)
+            def timelimited():
+                self.cursor.execute(query)
+                result = self.cursor.fetchall()
+                return result
+            try:
+                result = timelimited()
+            except exceptions.FunctionTimedOut:
+                print("timeout!")
+                self.cursor.close()
+                return result
+        else:
+            self.cursor.execute(query)
+            result = self.cursor.fetchall()
+        return result
 
     def __del__(self):
         self.connection.close()
