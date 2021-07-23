@@ -268,7 +268,7 @@ def sqldump(sql_file,table_college_info_sql_file,table_iprange_info_sql_file,tab
 def sqlite3dump(sqlite3file):
     print( "将SQLite3数据库压缩为gz文件: \n---------------处理中, 请稍候---------------")
     if default_gz_export:
-        os.system('gzip %s' % ( sqlite3file))
+        os.system('gzip -y %s' % ( sqlite3file))
         print( "SQLite3数据库gz压缩档导出成功! \n")
     
 if __name__ == '__main__':
@@ -313,6 +313,9 @@ if __name__ == '__main__':
             convertipv4(sqlite3,sqlite3file=sqlite3file)
         if ipv6update:
             db2SQLite3(sqlite3)
-        sqlite3.__del__
+        try:
+            sqlite3.__del__()
+        except:
+            pass
         if ipv4update or ipv6update:
             sqlite3dump(sqlite3file)
