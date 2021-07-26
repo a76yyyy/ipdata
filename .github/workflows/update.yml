@@ -10,11 +10,11 @@ name: "Update"
 on:
   # push:
   #   branches: [ main ]
-  # pull_request:
-  #   # The branches below must be a subset of the branches above
-  #   branches: [ main ]
-  schedule:
-    - cron: '0 17 1,5,10,15,20,25,30 * *'
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: [ main ]
+  # schedule:
+  #   - cron: '0 17 1,5,10,15,20,25,30 * *'
 
 jobs:
   Update:
@@ -70,4 +70,5 @@ jobs:
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
+        repository: ${{ secrets.REPOSITORY_NAME }}
         tags: true
