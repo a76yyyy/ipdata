@@ -20,7 +20,11 @@ from collegeUpdate import collegeUpdate
 from convert import convert
 from file_set import file_set
 from __init__ import data_dir,tmp_dir,DEFAULT_FILE_LOCATION,sql_file,table_college_info_sql_file,table_iprange_info_sql_file,table_ipv6_range_info_sql_file
-sys.stdout.reconfigure(encoding='utf-8')
+try:
+    sys.stdout.reconfigure(encoding='utf-8')
+except:
+    import codecs
+    sys.stdout = codecs.getwriter("utf-8")(sys.stdout.detach())
 
 file_set(tmp_dir,'dir')
 file_set(data_dir,'dir')
