@@ -62,9 +62,9 @@ jobs:
         git config --global user.email ${{ secrets.USER_EMAIL }}
         git config --global user.name ${{ secrets.USER_NAME }}
         git add .
-        git commit -m "Auto Update $(Get-Date -Format 'yyyy-M-d H:m:s')"
+        git commit -m "Auto Update $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')"
         git pull origin main
-        git tag -a v$(Get-Date -Format 'yyyy.M.d') -m "Auto Update $(Get-Date -Format 'yyyy-M-d')"
+        git tag -a v$(Get-Date -Format 'yyyy.MM.dd') -m "Auto Update $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')"
         
     - name: Push changes
       uses: ad-m/github-push-action@master
