@@ -2,18 +2,19 @@
 
 # IPDATA
 
-[![](https://img.shields.io/github/stars/a76yyyy/czipdata?style=social)](https://github.com/a76yyyy/czipdata/stargazers) 
-[![](https://img.shields.io/github/watchers/a76yyyy/czipdata?style=social)](https://github.com/a76yyyy/czipdata/watchers)
-[![](https://img.shields.io/github/forks/a76yyyy/czipdata?style=social)](https://github.com/a76yyyy/czipdata/network/members)
+[![](https://img.shields.io/github/stars/a76yyyy/ipdata?style=social)](https://github.com/a76yyyy/ipdata/stargazers) 
+[![](https://img.shields.io/github/watchers/a76yyyy/ipdata?style=social)](https://github.com/a76yyyy/ipdata/watchers)
+[![](https://img.shields.io/github/forks/a76yyyy/ipdata?style=social)](https://github.com/a76yyyy/ipdata/network/members)
 
 [![](https://img.shields.io/badge/HomePage-a76yyyy-brightgreen)](https://www.a76yyyy.cn) 
-[![](https://img.shields.io/github/license/a76yyyy/czipdata)](https://github.com/a76yyyy/czipdata/blob/main/LICENSE) 
-[![](https://img.shields.io/github/last-commit/a76yyyy/czipdata)](https://github.com/a76yyyy/czipdata/)
-[![](https://img.shields.io/github/commit-activity/m/a76yyyy/czipdata)](https://github.com/a76yyyy/czipdata/)
-![](https://img.shields.io/github/repo-size/a76yyyy/czipdata)
-![](https://img.shields.io/github/pipenv/locked/python-version/a76yyyy/czipdata)
+[![](https://img.shields.io/github/license/a76yyyy/ipdata)](https://github.com/a76yyyy/ipdata/blob/main/LICENSE) 
+[![](https://img.shields.io/github/last-commit/a76yyyy/ipdata)](https://github.com/a76yyyy/ipdata/)
+[![](https://img.shields.io/github/commit-activity/m/a76yyyy/ipdata)](https://github.com/a76yyyy/ipdata/)
+![](https://img.shields.io/github/repo-size/a76yyyy/ipdata)
+![](https://img.shields.io/github/pipenv/locked/python-version/a76yyyy/ipdata)
 [![Update](https://github.com/a76yyyy/ipdata/actions/workflows/update.yml/badge.svg)](https://github.com/a76yyyy/ipdata/actions/workflows/update.yml)
 [![Create Release](https://github.com/a76yyyy/ipdata/actions/workflows/create-release.yml/badge.svg)](https://github.com/a76yyyy/ipdata/actions/workflows/create-release.yml)
+
 
 纯真IPv4数据库镜像 / ZXinc_IPv6数据库镜像 & MySQL脚本/SQLite3 同步更新 for Python3(原czipdata项目)
 (数据文件已通过release发布)
