@@ -133,7 +133,7 @@ def db2mysql(mysql_object,ipv6_tablename,db_filename):
     ary = []
     i = 0
     j = 0
-    insert_sql = 'INSERT  INTO `'+ ipv6_tablename +'` (`ip_start`, `ip_start_num`, `ip_end`, `ip_end_num`, `country`, `province`, `city`, `area`, `address`, `location`, `UpdateTime`) VALUES ( %s, _binary %s, %s, _binary %s, %s, %s, %s, %s, %s, %s, DEFAULT )'
+    insert_sql = 'INSERT  INTO `'+ ipv6_tablename +'` (`ip_start`, `ip_start_num`, `ip_end`, `ip_end_num`, `country`, `province`, `city`, `area`, `address`, `location`, `UpdateTime`) VALUES ( %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, DEFAULT )'
     for info in D.iter():
         if info.info[0]:
             tmpinfo = info.info[0].split('\t',3)
