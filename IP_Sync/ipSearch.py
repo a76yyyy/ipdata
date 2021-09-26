@@ -237,11 +237,10 @@ class IPv6Loader:
 
         if needle < read_index(lo)[0]:
             raise LookupError('IP not found')
-        else:
-            ip, offset = read_index(hi)
-            if needle >= ip:
-                info = self._read_rec(offset)
-                return IpInfo(self._int_to_ip(ip), None, info)
+        ip, offset = read_index(hi)
+        if needle >= ip:
+            info = self._read_rec(offset)
+            return IpInfo(self._int_to_ip(ip), None, info)
 
         loip = 0
         if self.ip_version == 4:
