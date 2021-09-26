@@ -92,7 +92,7 @@ def db_down(filename, version_file):
     except:
         logger.error(f'解压缩{tmp_path}时出错!')
         return -5
-    if filename == None:
+    if filename is None:
         return data
     elif type(filename) == str:
         # save to filename

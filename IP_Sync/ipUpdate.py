@@ -234,7 +234,7 @@ def dat_down(filename,version_file):
         logger.error('解压缩qqwry.rar时出错!')
         return -5
 
-    if filename == None:
+    if filename is None:
         return data
     elif type(filename) == str:
         # save to file
