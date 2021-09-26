@@ -10,6 +10,7 @@ import sqlite3
 import os
 from configs import mysql
 from func_timeout import func_set_timeout,exceptions
+import sys
 
 class mysql_Database(object):
     host = mysql.host
@@ -33,7 +34,7 @@ class mysql_Database(object):
             self.connection = pymysql.connect(host=self.host, port=self.port, user=self.user, password=self.password, database=self.db, charset=self.charset, connect_timeout=self.connect_timeout, read_timeout=self.read_timeout)
         else:
             print('参数输入错误')
-            exit()
+            sys.exit()
         self.cursor = self.connection.cursor()
 
     def insert(self, query, params):
