@@ -94,7 +94,7 @@ def db_down(filename, version_file):
         return -5
     if filename is None:
         return data
-    elif type(filename) is str:
+    if type(filename) is str:
         # save to filename
         try:
             tmp_path = os.path.join(tmp_dir, 'ipv6wry.db')
@@ -153,7 +153,7 @@ def db_down_info(filename, version_file,ipv4update=False):
             )
         print( "------------------------------------------- \n " )
         return 1
-    elif ret == 0:
+    if ret == 0:
         print( "-------------------------------------------" )
         if not ipv4update and not default_txt_update:
             print( "正在退出IP数据库更新任务, 请稍候... \n " )

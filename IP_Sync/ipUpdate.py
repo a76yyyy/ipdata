@@ -236,7 +236,7 @@ def dat_down(filename,version_file):
 
     if filename is None:
         return data
-    elif type(filename) is str:
+    if type(filename) is str:
         # save to file
         try:
             with open(filename, 'wb') as f:
@@ -261,7 +261,7 @@ def dat_down_info(filename,czip_version_file,v6_updated=False):
             )
         print( "------------------------------------------- \n " )
         return 1
-    elif ret == 0:
+    if ret == 0:
         print( "-------------------------------------------" )
         if not default_txt_update and v6_updated:
             print( "正在退出IP数据库更新任务, 请稍候... \n " )
