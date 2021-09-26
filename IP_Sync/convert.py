@@ -84,10 +84,9 @@ def addslashes(s): #在指定的预定义字符前添加反斜杠
             s = s.replace(x, d.get(x))
         return "'"+s+"'"
        # return "'"+pymysql.escape_string(s)+"'"
-    elif s is None:
+    if s is None:
         return "NULL"
-    else:
-        return "'"+str(s)+"'"
+    return "'"+str(s)+"'"
 
 def splitAddress( sql_object, college_tablename, address, location, correct_list, correct_json ): #从IP库的地址中提取省市区等数据
     country = ''

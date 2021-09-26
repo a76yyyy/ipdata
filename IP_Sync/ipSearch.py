@@ -73,7 +73,7 @@ class IPLoader:
         if flag == 0:
             return 'None'
 
-        elif flag == 2:
+        if flag == 2:
             offset = self.get_offset(offset + 1)
             return self.get_string(offset)
 
