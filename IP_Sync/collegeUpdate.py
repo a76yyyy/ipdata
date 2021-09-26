@@ -166,7 +166,7 @@ def collegeUpdate(filename, college_tablename,sqlite3file=None):
             print('------------------------------------------- ')
         else:
             print('导入失败,请手动下载文件至'+filename)
-            exit()
+            sys.exit()
     if sqlite3file:
         sql_object = sqlite3_Database(sqlite3file)
         sqlite3 = True

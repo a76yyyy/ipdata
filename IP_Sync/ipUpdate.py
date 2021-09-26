@@ -265,7 +265,7 @@ def dat_down_info(filename,czip_version_file,v6_updated=False):
         print( "-------------------------------------------" )
         if not default_txt_update and v6_updated:
             print( "正在退出IP数据库更新任务, 请稍候... \n " )
-            exit(0)
+            sys.exit(0)
         else:
             print()
             return 0
@@ -274,7 +274,7 @@ def dat_down_info(filename,czip_version_file,v6_updated=False):
         print( "-------------------------------------------" )
         if not default_txt_update and v6_updated:
             print( "正在退出IP数据库更新任务, 请稍候... \n " )
-            exit(1)
+            sys.exit(1)
         else:
             print()
             return -1
