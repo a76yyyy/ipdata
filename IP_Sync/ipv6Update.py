@@ -94,7 +94,7 @@ def db_down(filename, version_file):
         return -5
     if filename == None:
         return data
-    elif type(filename) == str:
+    elif type(filename) is str:
         # save to filename
         try:
             tmp_path = os.path.join(tmp_dir, 'ipv6wry.db')
