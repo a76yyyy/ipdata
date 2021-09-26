@@ -10,7 +10,6 @@ sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 import getopt
 import ipUpdate,ipv6Update
 from file_set import file_set
-import getopt
 from ipSearch import IPLoader,convert_int_ip_to_string,convert_string_ip_to_int
 from ipSearch import IPv6Loader
 from __init__ import tmp_dir,data_dir
