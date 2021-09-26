@@ -13,6 +13,7 @@ License: GPLv3 or later
 
 import os,sys
 import re
+import sys
 import time
 import logging
 import struct
@@ -157,7 +158,7 @@ def db_down_info(filename, version_file,ipv4update=False):
         print( "-------------------------------------------" )
         if not ipv4update and not default_txt_update:
             print( "正在退出IP数据库更新任务, 请稍候... \n " )
-            exit(0)
+            sys.exit(0)
         else:
             print()
             return 0
@@ -166,7 +167,7 @@ def db_down_info(filename, version_file,ipv4update=False):
         print( "-------------------------------------------" )
         if not default_txt_update:
             print( "正在退出IP数据库更新任务, 请稍候... \n " )
-            exit(1)
+            sys.exit(1)
         else:
             print()
             return -1
