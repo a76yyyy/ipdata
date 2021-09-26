@@ -13,7 +13,6 @@ License: GPLv3 or later
 
 import os,sys
 import re
-import sys
 import time
 import logging
 import struct
