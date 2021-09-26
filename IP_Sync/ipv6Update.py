@@ -104,7 +104,7 @@ def db_down(filename, version_file):
                 safe_overwrite(filename, d, mode='wb')
             finally :
                 os.remove(tmp_path)
-            old_c = D and D.count or 0
+            old_c = D.count if D else 0
             D = IPv6Loader(filename)
             print('已经更新！IPv6数据条数 %d->%d.' % (old_c, D.count),
                             file=sys.stderr)
