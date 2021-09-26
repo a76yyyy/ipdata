@@ -69,7 +69,7 @@ def jsonDownload(filename):
         if not data:
             return -1
 
-    if filename == None:
+    if filename is None:
         return data
     elif type(filename) == str:
         # save to file
