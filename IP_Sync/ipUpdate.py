@@ -236,7 +236,7 @@ def dat_down(filename,version_file):
 
     if filename is None:
         return data
-    elif type(filename) == str:
+    elif type(filename) is str:
         # save to file
         try:
             with open(filename, 'wb') as f:
