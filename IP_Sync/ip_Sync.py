@@ -39,9 +39,9 @@ def down(filename= None,version_file= None):
     -------
     """
 
-    if filename == None:
+    if filename is None:
         filename =  os.path.abspath(data_dir+os.path.sep+"czipdata.dat")
-    if version_file == None:
+    if version_file is None:
         version_file = os.path.abspath(data_dir+os.path.sep+"czipdata_version.bin")
     return ipUpdate.dat_down_info(filename,version_file)
 
@@ -59,16 +59,16 @@ def dat2Txt(dat_filename= None, txt_filename= None, startIndex= None, endIndex= 
     -------
     """
 
-    if dat_filename == None:
+    if dat_filename is None:
         dat_filename = os.path.abspath(data_dir+os.path.sep+"czipdata.dat")
     if not file_set(dat_filename) or default_dat_update:
         tag = down(dat_filename)
     q = IPLoader(dat_filename)
-    if txt_filename == None:
+    if txt_filename is None:
         txt_filename = os.path.abspath(data_dir+os.path.sep+"czipdata.txt")
-    if startIndex == None:
+    if startIndex is None:
         startIndex = 0
-    if endIndex == None:
+    if endIndex is None:
         endIndex = q.idx_count
     if tag or default_txt_update:
         file_set(txt_filename)
@@ -85,9 +85,9 @@ def v6down(filename= None,version_file= None, ipv4update=False):
     -------
     """
 
-    if filename == None:
+    if filename is None:
         filename =  DEFAULT_FILE_LOCATION
-    if version_file == None:
+    if version_file is None:
         version_file = os.path.abspath(data_dir+os.path.sep+"ipv6data_version.bin")
     return ipv6Update.db_down_info(filename,version_file,ipv4update)
 
@@ -104,16 +104,16 @@ def db2Txt(db_filename= None, txt_filename= None, startIndex= None, endIndex= No
     -------
     """
 
-    if db_filename == None:
+    if db_filename is None:
         db_filename = DEFAULT_FILE_LOCATION
     if not file_set(db_filename) or default_dat_update:
         tag = v6down(db_filename,ipv4update=ipv4update)
     D = IPv6Loader(db_filename)
-    if txt_filename == None:
+    if txt_filename is None:
         txt_filename = os.path.abspath(data_dir+os.path.sep+"ipv6data.txt")
-    if startIndex == None:
+    if startIndex is None:
         startIndex = 0
-    if endIndex == None:
+    if endIndex is None:
         endIndex = D.count
     if tag or default_txt_update:
         file_set(txt_filename)
@@ -131,11 +131,11 @@ def dat2Mysql(mysql_object,ip_tablename= None, txt_filename= None):
     -------
     """
     
-    if txt_filename == None:
+    if txt_filename is None:
         txt_filename = os.path.abspath(data_dir+os.path.sep+"czipdata.txt")
         if not file_set(txt_filename):
             dat2Txt(txt_filename= txt_filename)
-    if ip_tablename == None:
+    if ip_tablename is None:
         ip_tablename = 'iprange_info'
     mysql = mysql_object
     dat2mysql(mysql,ip_tablename,txt_filename)
@@ -151,11 +151,11 @@ def db2Mysql(mysql_object,ipv6_tablename= None, db_filename= None,ipv6update= Tr
     -------
     """
     
-    if db_filename == None:
+    if db_filename is None:
         db_filename = DEFAULT_FILE_LOCATION
         if not file_set(db_filename):
             v6down(db_filename)
-    if ipv6_tablename == None:
+    if ipv6_tablename is None:
         ipv6_tablename = 'ipv6_range_info'
     mysql = mysql_object
     if ipv6update:
@@ -172,11 +172,11 @@ def dat2SQLite3(sqlite3_object,ip_tablename= None, txt_filename= None):
     -------
     """
     
-    if txt_filename == None:
+    if txt_filename is None:
         txt_filename = os.path.abspath(data_dir+os.path.sep+"czipdata.txt")
         if not file_set(txt_filename):
             dat2Txt(txt_filename= txt_filename)
-    if ip_tablename == None:
+    if ip_tablename is None:
         ip_tablename = 'iprange_info'
     sqlite3 = sqlite3_object
     dat2sqlite3(sqlite3,ip_tablename,txt_filename)
@@ -192,11 +192,11 @@ def db2SQLite3(sqlite3_object,ipv6_tablename= None, db_filename= None,ipv6update
     -------
     """
     
-    if db_filename == None:
+    if db_filename is None:
         db_filename = DEFAULT_FILE_LOCATION
         if not file_set(db_filename):
             v6down(db_filename)
-    if ipv6_tablename == None:
+    if ipv6_tablename is None:
         ipv6_tablename = 'ipv6_range_info'
     sqlite3 = sqlite3_object
     if ipv6update:
@@ -214,9 +214,9 @@ def collegeupdate(collegeJson= None, college_tablename= None, sqlite3file= None)
     -------
     """
     
-    if collegeJson == None:
+    if collegeJson is None:
         collegeJson =  os.path.abspath(tmp_dir+os.path.sep+"college.json")
-    if college_tablename == None:
+    if college_tablename is None:
         college_tablename = 'college_info'
     collegeUpdate(filename, college_tablename, sqlite3file=sqlite3file)
 
@@ -234,15 +234,15 @@ def convertipv4(sql_object,college_tablename= None,num_config= None,start_id= No
     @Returns  :None
     -------
     """
-    if num_config == None:
+    if num_config is None:
         num_config = 20000 
-    if start_id == None:
+    if start_id is None:
         start_id = 1
-    if college_tablename == None:
+    if college_tablename is None:
         college_tablename = 'college_info'
-    if college_filename == None:
+    if college_filename is None:
         college_filename =  os.path.abspath(tmp_dir+os.path.sep+"college.json")
-    if correct_filename == None:
+    if correct_filename is None:
         correct_filename =  os.path.abspath(data_dir+os.path.sep+"correct.json")
         file_set(correct_filename)
     
