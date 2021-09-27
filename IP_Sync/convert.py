@@ -247,26 +247,25 @@ def convert(sql_object,college_tablename,num_config,start_id,college_filename,co
     print('------------------------------------------- ')
     print( "开始载入纠错文件correct.json: \n---------------处理中, 请稍候---------------")
     file_set(correct_filename,'file')
-    correct_file = open(correct_filename, 'r', encoding='utf-8')
-    correct_str = correct_file.read()
-    try:
-        correct_json = json.loads(correct_str)
-    except:
-        correct_json = {}
-    correct_list = []
-    if correct_json:
-        for line in correct_json:
-            if line:
-                correct_list.append(line["address"]+line["location"])
-    #print(correct_list,correct_json)
-    print( "载入完成! ")
-    print('------------------------------------------- ')
-    print( "将IP数据库内的地址细分为省市区: \n---------------处理中, 请稍候---------------")
-    if sqlite3file:
-        convert_ip(conn, college_tablename, num_config, start_id, correct_list, correct_json,sqlite3file)
-    else:
-        convert_ip(conn, college_tablename, num_config, start_id, correct_list, correct_json)
-    correct_file.close()
+    with open(correct_filename, 'r', encoding='utf-8') as correct_file:
+        correct_str = correct_file.read()
+        try:
+            correct_json = json.loads(correct_str)
+        except:
+            correct_json = {}
+        correct_list = []
+        if correct_json:
+            for line in correct_json:
+                if line:
+                    correct_list.append(line["address"]+line["location"])
+        #print(correct_list,correct_json)
+        print( "载入完成! ")
+        print('------------------------------------------- ')
+        print( "将IP数据库内的地址细分为省市区: \n---------------处理中, 请稍候---------------")
+        if sqlite3file:
+            convert_ip(conn, college_tablename, num_config, start_id, correct_list, correct_json,sqlite3file)
+        else:
+            convert_ip(conn, college_tablename, num_config, start_id, correct_list, correct_json)
     print( "操作完成! \n ")
 
 if __name__ == '__main__':

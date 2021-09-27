@@ -86,10 +86,9 @@ def jsonDownload(filename):
         return -6
 
 def load_json(filename):
-    college_file = open(filename, 'r', encoding='utf-8')
-    college_str = college_file.read()
-    college_json = json.loads(college_str)
-    college_file.close()
+    with open(filename, 'r', encoding='utf-8') as college_file:
+        college_str = college_file.read()
+        college_json = json.loads(college_str)
     return college_json
 
 def convert_college(sql_object, filename, college_tablename, sqlite3=False) :
