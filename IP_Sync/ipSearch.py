@@ -162,7 +162,6 @@ def convert_str_to_utf8(gbk_str):
                 return gbk_str[:-1].decode('gbk').encode('utf-8') + '?'
             except Exception as e:
                 logging.info(e)
-                pass
 
         return 'None'
 
