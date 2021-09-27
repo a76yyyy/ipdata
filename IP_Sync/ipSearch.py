@@ -190,7 +190,9 @@ class IPv6Loader:
             self.f = f = mmap.mmap(dbfile.fileno(),0,access=mmap.MAP_SHARED)
         except:
             self.f = f = mmap.mmap(dbfile.fileno(),0,access=mmap.ACCESS_READ)
-
+        finally:
+            dbfile.close()
+        
         magic = f[0:4]
         if magic != b'IPDB':
             raise DatabaseError('bad magic')

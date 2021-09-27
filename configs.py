@@ -14,7 +14,7 @@ default_txt_update = False #当数据文件版本无更新时是否默认自动�
 default_sql_update = True #当执行ip_Sync.py时是否默认自动更新数据库, False为默认不更新。
 default_sql_export = False #当执行ip_Sync.py时是否默认自动导出sql脚本, False为默认不导出。
 default_gz_export = True #当执行ip_Sync.py时是否默认自动导出sql脚本的gz压缩档, True为默认导出。
-class mysql(object):
+class mysql:
     host = "localhost"
     port = 3306
     user = "root"
@@ -25,7 +25,7 @@ class mysql(object):
     read_timeout = 5
     net_buffer_length = "1M"
 
-class sqlite3(object):
+class sqlite3:
     chdir=os.path.abspath(os.path.dirname(__file__)+os.path.sep+"data")
     ip_database=os.path.abspath(chdir+os.path.sep+"ipdata.db")
 

@@ -12,7 +12,7 @@ from configs import mysql
 from func_timeout import func_set_timeout,exceptions
 import sys
 
-class mysql_Database(object):
+class mysql_Database:
     host = mysql.host
     port = mysql.port
     user = mysql.user
@@ -85,7 +85,7 @@ class mysql_Database(object):
     def __del__(self):
         self.connection.close()
 
-class sqlite3_Database(object):
+class sqlite3_Database:
     
     def __init__(self,db_file,connect_timeout=5.0):
         self.connection = sqlite3.connect(db_file,timeout=connect_timeout)

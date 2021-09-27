@@ -33,9 +33,7 @@ def usage():
     )
 
 def convert_ip(sql_object, college_tablename, num_config, start_id, correct_list, correct_json,sqlite3file=None) : #将IP数据库内的地址细分为省市区
-    if start_id > 1 :
-        start_id = start_id
-    else:
+    if start_id < 1 :
         start_id = 1
     next_id = start_id + num_config #下一次开始ID
     next_end_id = next_id + num_config #下一次结束ID
@@ -268,6 +266,7 @@ def convert(sql_object,college_tablename,num_config,start_id,college_filename,co
         convert_ip(conn, college_tablename, num_config, start_id, correct_list, correct_json,sqlite3file)
     else:
         convert_ip(conn, college_tablename, num_config, start_id, correct_list, correct_json)
+    correct_file.close()
     print( "操作完成! \n ")
 
 if __name__ == '__main__':
