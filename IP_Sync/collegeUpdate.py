@@ -6,7 +6,8 @@
 @version       :1.0
 '''
 
-import sys,os
+import os
+import sys
 sys.path.append(os.path.abspath(os.path.dirname(os.path.dirname(__file__))))
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 import requests
@@ -51,7 +52,7 @@ def jsonDownload(filename):
                     raise Exception('文件大小为零')
                 return dat
             except Exception as e:
-                logger.error('下载%s时出错: %s' % (file_name, str(e)))
+                logger.error('下载%s时出错: %s', file_name, str(e))
                 return None
 
         return open_url

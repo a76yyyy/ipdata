@@ -5,7 +5,8 @@
 @Author        :a76yyyy
 @version       :1.0
 '''
-import sys,os
+import os
+import sys
 sys.path.append(os.path.abspath(os.path.dirname(os.path.dirname(__file__))))
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 from database import sqlite3_Database
@@ -208,7 +209,7 @@ if __name__ == '__main__':
     file_set(data_dir,'dir')
     if 'sqlite3file' not in varlist:
         sqlite_object = sqlite3_Database(config['sqlite3'].ip_database)
-    if main_table_info ==0 or main_table_info == 1:
+    if main_table_info in (0, 1):
         if 'ip_tablename' not in varlist:
             ip_tablename = 'iprange_info'
         if 'txt_filename' not in varlist:
@@ -221,7 +222,7 @@ if __name__ == '__main__':
                 q = IPLoader(dat_filename)
                 get_ip_info(dat_filename,txt_filename,0,q.idx_count)
         dat2sqlite3(sqlite_object,ip_tablename,txt_filename)
-    if main_table_info ==0 or main_table_info == 2:
+    if main_table_info in (0, 2):
         if 'ipv6_tablename' not in varlist:
             ipv6_tablename = 'ipv6_range_info'
         if 'db_filename' not in varlist:

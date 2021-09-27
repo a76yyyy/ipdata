@@ -24,7 +24,8 @@
 # -5：解压缩qqwry.rar时出错
 # -6：保存到最终文件时出错
 
-import sys,os
+import os
+import sys
 import struct
 import urllib.request
 import zlib
@@ -121,7 +122,7 @@ def get_fetcher():
                 return dat
         except Exception as e:
             print(e)
-            logger.error('下载%s时出错: %s' % (file_name, str(e)))
+            logger.error('下载%s时出错: %s', file_name, str(e))
             return None
 
     return open_url

@@ -5,10 +5,12 @@
 @Author        :a76yyyy
 @version       :2.0
 '''
-import sys,os
+import os
+import sys
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 import getopt
-import ipUpdate,ipv6Update
+import ipUpdate
+import ipv6Update
 from file_set import file_set
 from ipSearch import IPLoader,convert_int_ip_to_string,convert_string_ip_to_int
 from ipSearch import IPv6Loader
@@ -142,7 +144,7 @@ if __name__ == '__main__':
     file_set(data_dir,'dir')
     if 'startIndex' not in varlist:
         startIndex = 0
-    if main_dat_info == 0 or main_dat_info == 1:
+    if main_dat_info in (0, 1):
         if 'dat_filename' not in varlist:
             dat_filename = os.path.abspath(data_dir+os.path.sep+"czipdata.dat")
         if 'czip_version_file' not in varlist:
@@ -156,8 +158,8 @@ if __name__ == '__main__':
             file_set(txt_filename)
         if 'endIndex' not in varlist:
             endIndex = q.idx_count
-        ip_info = get_ip_info(dat_filename,txt_filename,startIndex,endIndex)
-    if main_dat_info == 0 or main_dat_info == 2:
+        get_ip_info(dat_filename,txt_filename,startIndex,endIndex)
+    if main_dat_info in (0, 2):
         if 'db_filename' not in varlist:
             db_filename = os.path.abspath(data_dir+os.path.sep+"ipv6data.db")
         if 'ipv6_version_file' not in varlist:
@@ -171,4 +173,4 @@ if __name__ == '__main__':
             file_set(txtv6_filename)
         if 'endIndex' not in varlist:
             endv6Index = D.count
-        ipv6_info = get_ipv6_info(db_filename, txtv6_filename, startIndex,endv6Index)
+        get_ipv6_info(db_filename, txtv6_filename, startIndex,endv6Index)

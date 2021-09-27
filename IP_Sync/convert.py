@@ -7,7 +7,8 @@
 
 '''
 
-import sys,os
+import os
+import sys
 sys.path.append(os.path.abspath(os.path.dirname(os.path.dirname(__file__))))
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 from database import mysql_Database,sqlite3_Database
@@ -75,7 +76,7 @@ def convert_ip(sql_object, college_tablename, num_config, start_id, correct_list
 
 def addslashes(s): #在指定的预定义字符前添加反斜杠
     # import pymysql
-    if(isinstance(s,str)):
+    if isinstance(s,str):
         d = {"\0": "", "&nbsp;" : " ", "\\":"\\\\", "\"": "\\\"", "\r":"\\r", "\n":"\\n"} 
         for x in d:
             s = s.replace(x, d.get(x))
