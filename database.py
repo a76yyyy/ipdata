@@ -62,9 +62,8 @@ class mysql_Database:
         self.cursor = self.connection.cursor(pymysql.cursors.DictCursor)# 得到一个可以执行SQL语句并且将结果作为字典返回的游标
         result = None
         timeout = None
-        if args:
-            if len(args) == 1:
-                timeout = args[0]
+        if args and len(args) == 1:
+            timeout = args[0]
         if timeout:
             @func_set_timeout(timeout)
             def timelimited():
@@ -124,9 +123,8 @@ class sqlite3_Database:
         self.cursor = self.connection.cursor()
         result = None
         timeout = None
-        if args:
-            if len(args) == 1:
-                timeout = args[0]
+        if args and len(args) == 1:
+            timeout = args[0]
         if timeout:
             @func_set_timeout(timeout)
             def timelimited():

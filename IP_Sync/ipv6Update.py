@@ -11,7 +11,8 @@ Get it here: http://ip.zxinc.org/
 License: GPLv3 or later
 '''
 
-import os,sys
+import os
+import sys
 import re
 import time
 import logging
@@ -57,66 +58,70 @@ def db_down(filename, version_file):
         print('注意：原IPv6数据文件无法打开：', e, file=sys.stderr)
         D = None
 
-    req = urllib.request.Request(
-        host,
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0',
-        })
-    res = urllib.request.urlopen(req, timeout=30)
-    page = res.read().decode('utf-8')
-    m = re.search(r'href="([^"]+)".*?版本(\d{8})', page)
-    date = int(m.group(2))
-    remote_file = m.group(1)
+    if host.lower().startswith('http'):
+        req = urllib.request.Request(
+            host,
+            headers = {
+                'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0',
+            })
+    else:
+        raise ValueError from None
 
-    if D and date <= curr_version:
-        noup = '当前IPv6数据文件版本 ('+ str(curr_version) + ')无更新!'
-        print(noup)
-        with open(version_file, "wb+") as handle:
-            handle.write(struct.pack("<3I", date, check_time, update_time))
-        return 0
-    upstart = 'IPv6数据文件新版本: ' + str(date) 
-    print(upstart)
-    print( "------------------------------------------- \n " )
-    print('开始更新IPv6数据文件: '+ filename + '\n---------------处理中, 请稍候---------------')
-    update_time = int(time.time())
-    tmp_path = os.path.join(tmp_dir, remote_file)
-    data = fetcher(tmp_path,f'{host}/{remote_file}')
-    if not data:
-        print('下载出错，正在重试...')
-        data = fetcher(tmp_path,f'{host}/{remote_file}')
-        if not data:
-            return -3
-    try:
-        with py7zr.SevenZipFile(tmp_path, 'r') as archive:
-            archive.extract(targets=['ipv6wry.db'],path=tmp_dir)
-    except:
-        logger.error(f'解压缩{tmp_path}时出错!')
-        return -5
-    if filename is None:
-        return data
-    if type(filename) is str:
-        # save to filename
-        try:
-            tmp_path = os.path.join(tmp_dir, 'ipv6wry.db')
-            with open(tmp_path, 'rb') as f:
-                d = f.read()
-            try:
-                safe_overwrite(filename, d, mode='wb')
-            finally :
-                os.remove(tmp_path)
-            old_c = D.count if D else 0
-            D = IPv6Loader(filename)
-            print('已经更新！IPv6数据条数 %d->%d.' % (old_c, D.count),
-                            file=sys.stderr)
+    with urllib.request.urlopen(req, timeout=30) as res:
+        page = res.read().decode('utf-8')
+        m = re.search(r'href="([^"]+)".*?版本(\d{8})', page)
+        date = int(m.group(2))
+        remote_file = m.group(1)
+
+        if D and date <= curr_version:
+            noup = '当前IPv6数据文件版本 ('+ str(curr_version) + ')无更新!'
+            print(noup)
             with open(version_file, "wb+") as handle:
                 handle.write(struct.pack("<3I", date, check_time, update_time))
-            return len(data)
+            return 0
+        upstart = 'IPv6数据文件新版本: ' + str(date) 
+        print(upstart)
+        print( "------------------------------------------- \n " )
+        print('开始更新IPv6数据文件: '+ filename + '\n---------------处理中, 请稍候---------------')
+        update_time = int(time.time())
+        tmp_path = os.path.join(tmp_dir, remote_file)
+        data = fetcher(tmp_path,f'{host}/{remote_file}')
+        if not data:
+            print('下载出错，正在重试...')
+            data = fetcher(tmp_path,f'{host}/{remote_file}')
+            if not data:
+                return -3
+        try:
+            with py7zr.SevenZipFile(tmp_path, 'r') as archive:
+                archive.extract(targets=['ipv6wry.db'],path=tmp_dir)
         except:
+            logger.error(f'解压缩{tmp_path}时出错!')
+            return -5
+        if filename is None:
+            return data
+        if type(filename) is str:
+            # save to filename
+            try:
+                tmp_path = os.path.join(tmp_dir, 'ipv6wry.db')
+                with open(tmp_path, 'rb') as f:
+                    d = f.read()
+                try:
+                    safe_overwrite(filename, d, mode='wb')
+                finally :
+                    os.remove(tmp_path)
+                old_c = D.count if D else 0
+                D = IPv6Loader(filename)
+                print('已经更新！IPv6数据条数 %d->%d.' % (old_c, D.count),
+                                file=sys.stderr)
+                with open(version_file, "wb+") as handle:
+                    handle.write(struct.pack("<3I", date, check_time, update_time))
+                return len(data)
+            except:
+                logger.error('保存到最终文件时出错!')
+                return -6
+        else:
             logger.error('保存到最终文件时出错!')
             return -6
-    else:
-        logger.error('保存到最终文件时出错!')
-        return -6
     
 
 def safe_overwrite(fname: str,

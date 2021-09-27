@@ -6,10 +6,12 @@
 @version       :2.0
 '''
 
-import sys,os
+import os
+import sys
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 sys.path.append(os.path.abspath(os.path.dirname(os.path.dirname(__file__))))
-import ipUpdate,ipv6Update
+import ipUpdate
+import ipv6Update
 from ipSearch import IPLoader,IPv6Loader
 from dat2txt import get_ip_info,get_ipv6_info
 from database import mysql_Database, sqlite3_Database
