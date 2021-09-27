@@ -54,9 +54,9 @@ def usage():
     )
 
 
-class ProgressBar(object):
+class ProgressBar:
     def __init__(self, title,count=0.0,run_status=None,fin_status=None,total=100.0,unit='', sep='/',chunk_size=1.0):
-        super(ProgressBar, self).__init__()
+        # super(ProgressBar, self).__init__()
         self.info = "[%s] %s %.2f %s %s %.2f %s"
         self.title = title
         self.total = total
