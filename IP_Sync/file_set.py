@@ -6,13 +6,13 @@
 @version       :1.0
 '''
 import os
-def file_set(file= None, type = None):
+def file_set(file= None, open_type = None):
     if not os.path.exists(file):
         if not os.path.exists(os.path.dirname(file)):
             os.makedirs(os.path.dirname(file))
-        if type == 'dir':
+        if open_type == 'dir':
             os.makedirs(file)
-        if type == 'file':
+        if open_type == 'file':
             with open(file, 'wb+'):
                 pass
         if not os.path.exists(file):
