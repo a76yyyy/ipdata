@@ -289,10 +289,12 @@ class IPv6Loader:
 
         yield IpInfo(int_to_ip(last_ip), ipaddress.IPv6Address((hiip << 8 * 8) + hiip), info)
 
-    def _int_to_ip_v4(self, i: int) -> ipaddress.IPv4Address:
+    @staticmethod
+    def _int_to_ip_v4(i: int) -> ipaddress.IPv4Address:
         return ipaddress.IPv4Address(i)
 
-    def _int_to_ip_v6(self, i: int) -> ipaddress.IPv6Address:
+    @staticmethod
+    def _int_to_ip_v6(i: int) -> ipaddress.IPv6Address:
         return ipaddress.IPv6Address(i << 8 * 8)
 
     def _read_index_v4(self, i):

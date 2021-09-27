@@ -112,7 +112,8 @@ class sqlite3_Database:
         except Exception as e:
             print(e)
             self.connection.rollback()
-    def dictFactory(self,cursor,row):
+    @staticmethod
+    def dictFactory(cursor,row):
         """将sql查询结果整理成字典形式"""
         d={}
         for index,col in enumerate(cursor.description):
