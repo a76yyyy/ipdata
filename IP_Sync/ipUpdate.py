@@ -154,22 +154,22 @@ def dat_down(filename,version_file):
         data = fetcher(copywrite_file, url)
         if not data:
             print('获取信息失败, 尝试从Github获取更新信息!')
-            url = 'https://raw.githubusercontent.com/a76yyyy/czipdata/main/IP_Sync/tmp/copywrite.rar'
+            url = 'https://raw.githubusercontent.com/a76yyyy/ipdata/main/tmp/copywrite.rar'
             data = fetcher(copywrite_file, url)
             x = 1
             if not data:
                 print('获取信息失败, 尝试从jsdelivr获取更新信息!')
-                url = 'https://cdn.jsdelivr.net/gh/a76yyyy/czipdata@master/IP_Sync/tmp/copywrite.rar'
+                url = 'https://cdn.jsdelivr.net/gh/a76yyyy/ipdata@main/tmp/copywrite.rar'
                 data = fetcher(copywrite_file, url)
                 x = 2
                 if not data:
                     print('获取信息失败, 尝试从Github镜像站获取更新信息!')
-                    url = 'https://raw.fastgit.org/a76yyyy/czipdata/main/IP_Sync/tmp/copywrite.rar'
+                    url = 'https://raw.fastgit.org/a76yyyy/ipdata/main/tmp/copywrite.rar'
                     data = fetcher(copywrite_file, url)
                     x = 3
                     if not data:
                         print('获取信息失败, 尝试从Gitee获取更新信息!')
-                        url = 'https://gitee.com/a76yyyy/czipdata/raw/main/IP_Sync/tmp/copywrite.rar'
+                        url = 'https://gitee.com/a76yyyy/ipdata/raw/main/tmp/copywrite.rar'
                         data = fetcher(copywrite_file, url)
                         x = 4
                         if not data:
@@ -202,13 +202,13 @@ def dat_down(filename,version_file):
     if x == 0:
         url = 'http://update.cz88.net/ip/qqwry.rar'
     elif x == 1:
-        url = 'https://raw.githubusercontent.com/a76yyyy/czipdata/main/IP_Sync/tmp/qqwry.rar'
+        url = 'https://raw.githubusercontent.com/a76yyyy/ipdata/main/tmp/qqwry.rar'
     elif x == 2:
-        url = 'https://cdn.jsdelivr.net/gh/a76yyyy/czipdata@master/IP_Sync/tmp/qqwry.rar'
+        url = 'https://cdn.jsdelivr.net/gh/a76yyyy/ipdata@main/tmp/qqwry.rar'
     elif x == 3:
-        url = 'https://raw.fastgit.org/a76yyyy/czipdata/main/IP_Sync/tmp/qqwry.rar'
+        url = 'https://raw.fastgit.org/a76yyyy/ipdata/main/tmp/qqwry.rar'
     elif x == 4:
-        url = 'https://gitee.com/a76yyyy/czipdata/raw/main/IP_Sync/tmp/qqwry.rar'
+        url = 'https://gitee.com/a76yyyy/ipdata/raw/main/tmp/qqwry.rar'
     qqwry_file =  os.path.abspath(tmp_dir + os.path.sep + 'qqwry.rar')
     data = fetcher(qqwry_file, url)
     if not data:
