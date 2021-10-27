@@ -33,3 +33,8 @@ config = {
     'mysql':mysql,
     'sqlite3':sqlite3
 }
+
+try:
+    from local_config import * # 修改local_config.py文件的内容不受通过git更新源码的影响
+except ImportError:
+    pass
