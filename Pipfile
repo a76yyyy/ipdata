@@ -13,6 +13,8 @@ PyMySQL = "*"
 python-Levenshtein = "*"
 py7zr = "*"
 ipaddress = "*"
+pyopenssl = "*"
+certifi = "*"
 
 [dev-packages]
 pylint = "*"
