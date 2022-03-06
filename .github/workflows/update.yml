@@ -15,6 +15,12 @@ on:
     branches: [ main ]
   # schedule:
   #   - cron: '0 17 1,5,10,15,20,25,30 * *'
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'     
+        required: true
+        default: 'warning'
 
 jobs:
   Update:
