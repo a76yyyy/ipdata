@@ -14,6 +14,7 @@ __pycache__/
 # VSCODE
 .vscode/
 .history/
+.lh/
 
 # C extensions
 *.so
