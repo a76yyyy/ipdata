@@ -47,13 +47,10 @@ jobs:
     - name: Create DB
       run: echo $(mysql -uroot -p123456 -e "CREATE DATABASE ipdata;")
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
+    - name: Install Python, pipenv and Pipfile packages
+      uses: palewire/install-python-pipenv-pipfile@v2
       with:
         python-version: ${{ matrix.python-version }}
-
-    - name: Install pipenv
-      uses: dschep/install-pipenv-action@v1
 
     - name: Update ipdata
       run: |
