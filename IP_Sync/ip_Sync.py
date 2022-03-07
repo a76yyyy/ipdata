@@ -65,6 +65,8 @@ def dat2Txt(dat_filename= None, txt_filename= None, startIndex= None, endIndex= 
         dat_filename = os.path.abspath(data_dir+os.path.sep+"czipdata.dat")
     if not file_set(dat_filename) or default_dat_update:
         tag = down(dat_filename)
+    else:
+        tag = 0
     q = IPLoader(dat_filename)
     if txt_filename is None:
         txt_filename = os.path.abspath(data_dir+os.path.sep+"czipdata.txt")
@@ -110,6 +112,8 @@ def db2Txt(db_filename= None, txt_filename= None, startIndex= None, endIndex= No
         db_filename = DEFAULT_FILE_LOCATION
     if not file_set(db_filename) or default_v6dat_update:
         tag = v6down(db_filename,ipv4update=ipv4update)
+    else:
+        tag = 0
     D = IPv6Loader(db_filename)
     if txt_filename is None:
         txt_filename = os.path.abspath(data_dir+os.path.sep+"ipv6data.txt")
