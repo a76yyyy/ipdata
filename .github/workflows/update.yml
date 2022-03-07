@@ -35,6 +35,12 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
+    
+    - name: Set TimeZone
+      id: set_time
+      run: |
+        chcp 65001
+        Set-TimeZone -Name "China Standard Time"
 
     - name: Initialize mysql
       uses: ankane/setup-mysql@v1
@@ -54,9 +60,7 @@ jobs:
 
     - name: Update ipdata
       run: |
-        chcp 65001
-        Set-TimeZone -Name "China Standard Time"
-        echo "Auto Update $(Get-Date -Format 'yyyy-M-d H:m:s')"
+        echo "Auto_Update_$(Get-Date -Format 'yyyy.MM.dd')"
         pipenv install --dev
         pipenv run python ./IP_Sync/ip_Sync.py
         
@@ -65,9 +69,9 @@ jobs:
         git config --global user.email ${{ secrets.USER_EMAIL }}
         git config --global user.name ${{ secrets.USER_NAME }}
         git add .
-        git commit -m "Auto Update $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')"
+        git commit -m "Auto_Update_$(Get-Date -Format 'yyyy.MM.dd')"
         git pull origin main
-        git tag -a v$(Get-Date -Format 'yyyy.MM.dd') -m "Auto Update $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')"
+        git tag -a v$(Get-Date -Format 'yyyy.MM.dd') -m "Auto_Update_$(Get-Date -Format 'yyyy.MM.dd')"
         
     - name: Push changes
       uses: ad-m/github-push-action@master
@@ -75,3 +79,27 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         repository: ${{ secrets.REPOSITORY_NAME }}
         tags: true
+        
+    - name: Build
+      run: echo "Auto_Update_$(Get-Date -Format 'yyyy.MM.dd')" > Release.txt
+
+    - name: Test
+      run: cat Release.txt
+    
+    - name: Get Latest Tag
+      id: previoustag
+      uses: WyriHaximus/github-action-get-previous-tag@v1
+  
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ steps.previoustag.outputs.tag }}
+        files: |
+          Release.txt
+          data/*.db.gz
+          data/*.sql.gz
+          data/*.dat
+          data/*.db
+          data/*.txt
