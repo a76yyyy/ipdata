@@ -105,7 +105,7 @@ def splitAddress( sql_object, college_tablename, address, location, correct_list
         index = 1
 
 
-    matches = re.match( '(.*?(省|市|西藏|内蒙古|新疆|广西|宁夏|香港|澳门|台湾))', address )
+    matches = re.match( '(.*?(省|市|西藏|内蒙古|新疆|广西|宁夏|香港|澳门|台湾|北京|上海|浙江|湖北|广东|江苏|河南|甘肃))', address )
     if matches:
         country = '中国'
         province = matches.group()
@@ -205,6 +205,11 @@ def splitAddress( sql_object, college_tablename, address, location, correct_list
             #exit()
         index = 5
     
+    matches = re.match('(.*?(美国|澳大利亚|日本|泰国|印度|马来西亚|韩国|新加坡|菲律宾|越南|巴西|阿根廷|法国|波兰|荷兰|德国|西班牙|南非|英国|俄罗斯|瑞典|意大利|印尼|马来西亚|肯尼亚|尼日利亚|捷克|匈牙利|挪威|芬兰|加拿大|巴基斯坦|土耳其|伊拉克|乌克兰|墨西哥|智利|秘鲁|爱尔兰|哥伦比亚|罗马尼亚|丹麦|希腊|葡萄牙|亚美尼亚|塞尔维亚|克罗地亚|柬埔寨|黎巴嫩|毛里求斯|南非|以色列|冰岛|立陶宛|拉脱维亚|摩尔多瓦))', address)
+    if matches and not country:
+        country = matches.group()
+        index = 1
+
     correctname = address+location
     if correctname in correct_list:
         i = correct_list.index( correctname )
