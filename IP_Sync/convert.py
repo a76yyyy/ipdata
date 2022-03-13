@@ -105,7 +105,7 @@ def splitAddress( sql_object, college_tablename, address, location, correct_list
         index = 1
 
 
-    matches = re.match( '(.*?(省|市|西藏|内蒙古|新疆|广西|宁夏|香港|澳门))', address )
+    matches = re.match( '(.*?(省|市|西藏|内蒙古|新疆|广西|宁夏|香港|澳门|台湾))', address )
     if matches:
         country = '中国'
         province = matches.group()
