@@ -15,6 +15,7 @@ ipaddress = "*"
 pyopenssl = "*"
 certifi = "*"
 cryptography = "*"
+cpca = "*"
 
 [dev-packages]
 pylint = "*"
