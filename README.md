@@ -19,7 +19,7 @@
 > **因IPv4和IPv6数据库相继开启商业化运营模式, 当IP数据库源不再提供离线镜像时, 本仓库将尊重其要求进行存档或关闭。**
 
 纯真IPv4数据库镜像 / ZXinc_IPv6数据库镜像 & MySQL脚本/SQLite3 同步更新 for Python3(原czipdata项目)
-(数据文件已通过release发布)
+(仓库数据文件已通过release发布,commit历史初始化以优化仓库大小)
 
 Github：[https://github.com/a76yyyy/ipdata](https://github.com/a76yyyy/ipdata)(推荐)
 
