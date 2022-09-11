@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 '''
-@Description:  :ZXinc_IPv6数据库查询与更新
+@Description:  :ZXinc_IPv6数据库查询与更新(数据库已闭源)
 @Date          :2020/06/24 22:56:01
 @Author        :Forked from https://github.com/lilydjwg/winterpy
 @version       :2.0
